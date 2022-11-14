@@ -1,15 +1,18 @@
 // please ignore this file
-import {useState} from "react";
+import { useState } from 'react';
 
-const initialValue = (localStorage.getItem('catgirlExplainer') || '');
+const initialValue = localStorage.getItem('catgirlExplainer') || '';
 
-export function useCatgirlExplainer(): {isShown: boolean, toggle: () => void} {
-  const [isShown, setIsShown] = useState(initialValue !== 'false')
+export function useCatgirlExplainer(): {
+  isShown: boolean;
+  toggle: () => void;
+} {
+  const [isShown, setIsShown] = useState(initialValue !== 'false');
   const toggle = () =>
-    setIsShown(v => {
+    setIsShown((v) => {
       localStorage.setItem('catgirlExplainer', Boolean(!v).toString());
       return !v;
-    })
+    });
 
-  return {isShown, toggle};
+  return { isShown, toggle };
 }

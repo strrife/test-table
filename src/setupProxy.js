@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const request = require('request');
 
 module.exports = function (app) {

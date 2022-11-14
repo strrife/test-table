@@ -1,13 +1,13 @@
-import React, {useCallback, useEffect, useState} from "react";
+import React, { useCallback, useEffect, useState } from 'react';
 import {
   createColumnHelper,
   flexRender,
   getCoreRowModel,
   useReactTable,
-} from '@tanstack/react-table'
-import {CurrencyDetail} from "../services/types";
-import Money from "./Money";
-import {getTickers} from "../services/api";
+} from '@tanstack/react-table';
+import { CurrencyDetail } from '../services/types';
+import Money from './Money';
+import { getTickers } from '../services/api';
 import {
   Box,
   Button,
@@ -20,12 +20,12 @@ import {
   TableCell,
   TableHead,
   Typography,
-  styled
-} from "@mui/material";
-import CatgirlExplainer from "./CatgirlExplainer";
-import {useCatgirlExplainer} from "../services/catgirl";
+  styled,
+} from '@mui/material';
+import CatgirlExplainer from './CatgirlExplainer';
+import { useCatgirlExplainer } from '../services/catgirl';
 
-const columnHelper = createColumnHelper<CurrencyDetail>()
+const columnHelper = createColumnHelper<CurrencyDetail>();
 
 const HeaderCellText = styled(Typography)`
   font-weight: 500;
@@ -34,106 +34,115 @@ const HeaderCellText = styled(Typography)`
 
 const columns = [
   columnHelper.accessor('symbol', {
-    cell: info => info.getValue(),
+    cell: (info) => info.getValue(),
     header: () => <HeaderCellText>Symbol</HeaderCellText>,
   }),
   columnHelper.accessor('bid', {
-    cell: info => <Money>{info.getValue()}</Money>,
+    cell: (info) => <Money>{info.getValue()}</Money>,
     header: () => <HeaderCellText align={'right'}>Bid</HeaderCellText>,
   }),
   columnHelper.accessor('ask', {
-    cell: info => <Money>{info.getValue()}</Money>,
-    header: () => <HeaderCellText align={'right'}>Ask</HeaderCellText>
+    cell: (info) => <Money>{info.getValue()}</Money>,
+    header: () => <HeaderCellText align={'right'}>Ask</HeaderCellText>,
   }),
   columnHelper.accessor('last', {
-    cell: info => <Money>{info.getValue()}</Money>,
-    header: () => <HeaderCellText align={'right'}>Last</HeaderCellText>
+    cell: (info) => <Money>{info.getValue()}</Money>,
+    header: () => <HeaderCellText align={'right'}>Last</HeaderCellText>,
   }),
   columnHelper.accessor('dailyHigh', {
-    cell: info => <Money>{info.getValue()}</Money>,
-    header: () => <HeaderCellText align={'right'}>Daily High</HeaderCellText>
+    cell: (info) => <Money>{info.getValue()}</Money>,
+    header: () => <HeaderCellText align={'right'}>Daily High</HeaderCellText>,
   }),
   columnHelper.accessor('dailyChangePercent', {
-    cell: info => <Money>{info.getValue()}</Money>,
-    header: () => <HeaderCellText align={'right'}>Change, %</HeaderCellText>
+    cell: (info) => <Money>{info.getValue()}</Money>,
+    header: () => <HeaderCellText align={'right'}>Change, %</HeaderCellText>,
   }),
   columnHelper.accessor('dailyLow', {
-    cell: info => <Money>{info.getValue()}</Money>,
-    header: () => <HeaderCellText align={'right'}>Daily Low</HeaderCellText>
+    cell: (info) => <Money>{info.getValue()}</Money>,
+    header: () => <HeaderCellText align={'right'}>Daily Low</HeaderCellText>,
   }),
   columnHelper.accessor('dailyVolume', {
-    cell: info => <Money>{info.getValue()}</Money>,
-    header: () => <HeaderCellText align={'right'}>Volume</HeaderCellText>
+    cell: (info) => <Money>{info.getValue()}</Money>,
+    header: () => <HeaderCellText align={'right'}>Volume</HeaderCellText>,
   }),
-]
-
+];
 
 const CurrencyTable: React.FC = () => {
   const [data, setData] = useState<CurrencyDetail[] | null>(null);
 
   useEffect(() => {
     getTickers(['BTC', 'ETH']).then(setData);
-  }, [])
+  }, []);
 
   const reloadTable = useCallback(() => {
     alert('I do nothing');
   }, []);
 
-  const { isShown: isExplainerShown, toggle: toggleShowExplainer } = useCatgirlExplainer()
+  const { isShown: isExplainerShown, toggle: toggleShowExplainer } =
+    useCatgirlExplainer();
 
   const table = useReactTable({
     data: data || [],
     columns,
     getCoreRowModel: getCoreRowModel(),
-  })
+  });
 
-  if(!data) return <Box textAlign={'center'}><CircularProgress /></Box>
+  if (!data)
+    return (
+      <Box textAlign={'center'}>
+        <CircularProgress />
+      </Box>
+    );
 
   return (
     <>
       <Typography variant={'h1'}>Cryptocurrencies</Typography>
-      <Box  sx={{mt: 2, mb: 3}}>
-      <Button onClick={reloadTable} variant={'contained'}>Reload</Button>
-      {' '}
-      <Button onClick={toggleShowExplainer}>{isExplainerShown ? 'Hide' : 'Show'} Explainer</Button>
+      <Box sx={{ mt: 2, mb: 3 }}>
+        <Button onClick={reloadTable} variant={'contained'}>
+          Reload
+        </Button>{' '}
+        <Button onClick={toggleShowExplainer}>
+          {isExplainerShown ? 'Hide' : 'Show'} Explainer
+        </Button>
       </Box>
       {isExplainerShown && (
-      <Box mb={3}>
-      <CatgirlExplainer />
-      </Box>)}
+        <Box mb={3}>
+          <CatgirlExplainer />
+        </Box>
+      )}
       <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        <Table sx={{ minWidth: 650 }} aria-label='simple table'>
           <TableHead>
-        {table.getHeaderGroups().map(headerGroup => (
-          <TableRow key={headerGroup.id}>
-            {headerGroup.headers.map(header => (
-              <TableCell key={header.id}>
-                {header.isPlaceholder
-                  ? null
-                  : flexRender(
-                    header.column.columnDef.header,
-                    header.getContext()
-                  )}
-              </TableCell>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <TableRow key={headerGroup.id}>
+                {headerGroup.headers.map((header) => (
+                  <TableCell key={header.id}>
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext(),
+                        )}
+                  </TableCell>
+                ))}
+              </TableRow>
             ))}
-          </TableRow>
-        ))}
           </TableHead>
-        <TableBody>
-        {table.getRowModel().rows.map(row => (
-          <TableRow key={row.id}>
-            {row.getVisibleCells().map(cell => (
-              <TableCell key={cell.id}>
-                {flexRender(cell.column.columnDef.cell, cell.getContext())}
-              </TableCell>
+          <TableBody>
+            {table.getRowModel().rows.map((row) => (
+              <TableRow key={row.id}>
+                {row.getVisibleCells().map((cell) => (
+                  <TableCell key={cell.id}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </TableCell>
+                ))}
+              </TableRow>
             ))}
-          </TableRow>
-        ))}
-        </TableBody>
+          </TableBody>
         </Table>
       </TableContainer>
     </>
   );
-}
+};
 
 export default CurrencyTable;
