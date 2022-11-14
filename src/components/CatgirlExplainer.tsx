@@ -14,7 +14,7 @@ const CatgirlExplainer: React.FC = () => {
             component='img'
             height='280'
             image='/catgirl.webp'
-            alt='Paella dish'
+            alt=''
           />
         </Box>
         <Box sx={{ display: 'flex', flexDirection: 'column' }}>
@@ -50,6 +50,9 @@ const CatgirlExplainer: React.FC = () => {
                 <Typography>Add the ability to sort by columns</Typography>
               </li>
             </ul>
+            <Typography variant='body2' color='text.secondary'>
+              Good luck!
+            </Typography>
           </CardContent>
         </Box>
       </Card>

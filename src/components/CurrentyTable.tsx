@@ -96,10 +96,9 @@ const CurrencyTable: React.FC = () => {
 
   return (
     <>
-      <Typography variant={'h1'}>Cryptocurrencies</Typography>
-      <Box sx={{ mt: 2, mb: 3 }}>
+      <Box sx={{ mb: 3 }}>
         <Button onClick={reloadTable} variant={'contained'}>
-          Reload
+          Reload data
         </Button>{' '}
         <Button onClick={toggleShowExplainer}>
           {isExplainerShown ? 'Hide' : 'Show'} Explainer
