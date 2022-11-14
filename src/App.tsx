@@ -5,7 +5,7 @@ import { ThemeProvider as ThemeProviderMui } from '@mui/material';
 
 const theme = createTheme({
   palette: {
-    primary: {main: '#f00'},
+    primary: {main: 'rgb(247, 56, 39)'},
   },
   typography: {
     fontFamily: ["Roboto", "Courier New", "Helvetica", "Arial", "sans-serif"].join(","),

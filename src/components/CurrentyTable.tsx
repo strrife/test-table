@@ -22,6 +22,8 @@ import {
   Typography,
   styled
 } from "@mui/material";
+import CatgirlExplainer from "./CatgirlExplainer";
+import {useCatgirlExplainer} from "../services/catgirl";
 
 const columnHelper = createColumnHelper<CurrencyDetail>()
 
@@ -77,6 +79,7 @@ const CurrencyTable: React.FC = () => {
     alert('I do nothing');
   }, []);
 
+  const { isShown: isExplainerShown, toggle: toggleShowExplainer } = useCatgirlExplainer()
 
   const table = useReactTable({
     data: data || [],
@@ -89,7 +92,15 @@ const CurrencyTable: React.FC = () => {
   return (
     <>
       <Typography variant={'h1'}>Cryptocurrencies</Typography>
-      <Button onClick={reloadTable} sx={{mt: 2, mb: 3}} variant={'contained'}>Reload</Button>
+      <Box  sx={{mt: 2, mb: 3}}>
+      <Button onClick={reloadTable} variant={'contained'}>Reload</Button>
+      {' '}
+      <Button onClick={toggleShowExplainer}>{isExplainerShown ? 'Hide' : 'Show'} Explainer</Button>
+      </Box>
+      {isExplainerShown && (
+      <Box mb={3}>
+      <CatgirlExplainer />
+      </Box>)}
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
