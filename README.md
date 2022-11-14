@@ -44,3 +44,10 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+* Fix incorrect data shown in the table
+* Load Litecoin, Omisego, Ripple, 
+* Lint the project
+* Percentage column: it should display the percentage (i.e. 1% instead of 0.01). Also, please make it either green (for values > 0) or red (for values < 0)
+* Fix the reload button not working
+* Add the ability to sort by table columns

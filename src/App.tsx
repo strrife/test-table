@@ -1,12 +1,41 @@
 import React from 'react';
-import './App.css';
+import {Container, createTheme} from '@mui/material';
 import CurrencyTable from "./components/CurrentyTable";
+import { ThemeProvider as ThemeProviderMui } from '@mui/material';
 
+const theme = createTheme({
+  palette: {
+    primary: {main: '#f00'},
+  },
+  typography: {
+    fontFamily: ["Roboto", "Courier New", "Helvetica", "Arial", "sans-serif"].join(","),
+  },
+  components: {
+   MuiTypography: {
+      styleOverrides: {
+        root: {
+          letterSpacing: "0.55px",
+        },
+        h1: {
+          fontSize: "22px",
+          lineHeight: "36px",
+        },
+        body2: {
+          fontSize: "13px",
+          lineHeight: "20px",
+          fontFamily: 'Courier New, Monospace, serif'
+        },
+      },
+    },
+  },
+})
 function App() {
   return (
-    <div className="App">
-      <CurrencyTable />
-    </div>
+    <ThemeProviderMui theme={theme}>
+      <Container maxWidth="md" sx={{p: 5}}>
+        <CurrencyTable />
+      </Container>
+    </ThemeProviderMui>
   );
 }
 

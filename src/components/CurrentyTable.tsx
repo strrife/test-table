@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import {
   createColumnHelper,
   flexRender,
@@ -8,41 +8,60 @@ import {
 import {CurrencyDetail} from "../services/types";
 import Money from "./Money";
 import {getTickers} from "../services/api";
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Paper,
+  TableContainer,
+  Table,
+  TableRow,
+  TableBody,
+  TableCell,
+  TableHead,
+  Typography,
+  styled
+} from "@mui/material";
 
 const columnHelper = createColumnHelper<CurrencyDetail>()
+
+const HeaderCellText = styled(Typography)`
+  font-weight: 500;
+  font-size: 14px;
+`;
 
 const columns = [
   columnHelper.accessor('symbol', {
     cell: info => info.getValue(),
-    header: () => <span>Symbol</span>,
+    header: () => <HeaderCellText>Symbol</HeaderCellText>,
   }),
   columnHelper.accessor('bid', {
     cell: info => <Money>{info.getValue()}</Money>,
-    header: () => <span>Bid</span>,
+    header: () => <HeaderCellText align={'right'}>Bid</HeaderCellText>,
   }),
   columnHelper.accessor('ask', {
     cell: info => <Money>{info.getValue()}</Money>,
-    header: () => <span>Ask</span>
+    header: () => <HeaderCellText align={'right'}>Ask</HeaderCellText>
   }),
   columnHelper.accessor('last', {
     cell: info => <Money>{info.getValue()}</Money>,
-    header: () => <span>Last</span>
+    header: () => <HeaderCellText align={'right'}>Last</HeaderCellText>
   }),
   columnHelper.accessor('dailyHigh', {
     cell: info => <Money>{info.getValue()}</Money>,
-    header: () => <span>Daily High</span>
+    header: () => <HeaderCellText align={'right'}>Daily High</HeaderCellText>
   }),
   columnHelper.accessor('dailyChangePercent', {
     cell: info => <Money>{info.getValue()}</Money>,
-    header: () => <span>Change, %</span>
+    header: () => <HeaderCellText align={'right'}>Change, %</HeaderCellText>
   }),
   columnHelper.accessor('dailyLow', {
     cell: info => <Money>{info.getValue()}</Money>,
-    header: () => <span>Daily Low</span>
+    header: () => <HeaderCellText align={'right'}>Daily Low</HeaderCellText>
   }),
   columnHelper.accessor('dailyVolume', {
     cell: info => <Money>{info.getValue()}</Money>,
-    header: () => <span>Volume</span>
+    header: () => <HeaderCellText align={'right'}>Volume</HeaderCellText>
   }),
 ]
 
@@ -51,8 +70,12 @@ const CurrencyTable: React.FC = () => {
   const [data, setData] = useState<CurrencyDetail[] | null>(null);
 
   useEffect(() => {
-    getTickers(['BTC', 'ETH', 'XRP']).then(setData);
+    getTickers(['BTC', 'ETH']).then(setData);
   }, [])
+
+  const reloadTable = useCallback(() => {
+    alert('I do nothing');
+  }, []);
 
 
   const table = useReactTable({
@@ -61,37 +84,44 @@ const CurrencyTable: React.FC = () => {
     getCoreRowModel: getCoreRowModel(),
   })
 
-  if(!data) return <>Loading...</>
+  if(!data) return <Box textAlign={'center'}><CircularProgress /></Box>
+
   return (
-      <table>
-        <thead>
+    <>
+      <Typography variant={'h1'}>Cryptocurrencies</Typography>
+      <Button onClick={reloadTable} sx={{mt: 2, mb: 3}} variant={'contained'}>Reload</Button>
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <TableHead>
         {table.getHeaderGroups().map(headerGroup => (
-          <tr key={headerGroup.id}>
+          <TableRow key={headerGroup.id}>
             {headerGroup.headers.map(header => (
-              <th key={header.id}>
+              <TableCell key={header.id}>
                 {header.isPlaceholder
                   ? null
                   : flexRender(
                     header.column.columnDef.header,
                     header.getContext()
                   )}
-              </th>
+              </TableCell>
             ))}
-          </tr>
+          </TableRow>
         ))}
-        </thead>
-        <tbody>
+          </TableHead>
+        <TableBody>
         {table.getRowModel().rows.map(row => (
-          <tr key={row.id}>
+          <TableRow key={row.id}>
             {row.getVisibleCells().map(cell => (
-              <td key={cell.id}>
+              <TableCell key={cell.id}>
                 {flexRender(cell.column.columnDef.cell, cell.getContext())}
-              </td>
+              </TableCell>
             ))}
-          </tr>
+          </TableRow>
         ))}
-        </tbody>
-      </table>
+        </TableBody>
+        </Table>
+      </TableContainer>
+    </>
   );
 }
 
