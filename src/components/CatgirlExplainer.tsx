@@ -31,11 +31,6 @@ const CatgirlExplainer: React.FC = () => {
               </li>
               <li>
                 <Typography>
-                  Show data for: Bitcoin, Ethereum, Litecoin, Monero, Ripple
-                </Typography>
-              </li>
-              <li>
-                <Typography>
                   Fix the percentage column (i.e. show 1% instead of 0.01).
                   Also, make it either green (value &gt; 0) or red (value &lt;
                   0)

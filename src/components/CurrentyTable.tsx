@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback } from 'react';
 import {
   createColumnHelper,
   flexRender,
@@ -6,7 +6,7 @@ import {
   useReactTable,
 } from '@tanstack/react-table';
 import { CurrencyDetail } from '../services/types';
-import Money from './Money';
+import Money from './cells/Money';
 import { getTickers } from '../services/api';
 import {
   Box,
@@ -24,6 +24,8 @@ import {
 } from '@mui/material';
 import CatgirlExplainer from './CatgirlExplainer';
 import { useCatgirlExplainer } from '../services/catgirl';
+import Coin from './cells/Coin';
+import { useAsync } from '@react-hookz/web';
 
 const columnHelper = createColumnHelper<CurrencyDetail>();
 
@@ -34,7 +36,7 @@ const HeaderCellText = styled(Typography)`
 
 const columns = [
   columnHelper.accessor('symbol', {
-    cell: (info) => info.getValue(),
+    cell: (info) => <Coin>{info.getValue()}</Coin>,
     header: () => <HeaderCellText>Symbol</HeaderCellText>,
   }),
   columnHelper.accessor('bid', {
@@ -68,11 +70,9 @@ const columns = [
 ];
 
 const CurrencyTable: React.FC = () => {
-  const [data, setData] = useState<CurrencyDetail[] | null>(null);
-
-  useEffect(() => {
-    getTickers(['BTC', 'ETH']).then(setData);
-  }, []);
+  const [{ result, status }] = useAsync<CurrencyDetail[]>(async () =>
+    getTickers(['BTC', 'ETH', 'XRP', 'LTC']),
+  );
 
   const reloadTable = useCallback(() => {
     alert('I do nothing');
@@ -82,12 +82,12 @@ const CurrencyTable: React.FC = () => {
     useCatgirlExplainer();
 
   const table = useReactTable({
-    data: data || [],
+    data: result || [],
     columns,
     getCoreRowModel: getCoreRowModel(),
   });
 
-  if (!data)
+  if (status === 'loading')
     return (
       <Box textAlign={'center'}>
         <CircularProgress />

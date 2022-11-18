@@ -8,9 +8,9 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
 );
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  // no strict mode
+  // https://github.com/facebook/create-react-app/issues/12363#issuecomment-1118355650
+  <App />,
 );
 
 // If you want to start measuring performance in your app, pass a function
