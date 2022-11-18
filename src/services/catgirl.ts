@@ -1,4 +1,6 @@
-// please ignore this file
+// There are no issues for you to fix in this file
+// Please ignore this file
+
 import { useState } from 'react';
 
 const initialValue = localStorage.getItem('catgirlExplainer') || '';

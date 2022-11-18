@@ -1,8 +1,8 @@
+// There are no issues for you to fix in this file
+// Please ignore this file
 import React from 'react';
 import { Box, Typography, Card, CardContent, CardMedia } from '@mui/material';
 
-// There are no issues for you to fix in this file
-// Please ignore it
 const CatgirlExplainer: React.FC = () => {
   return (
     <>

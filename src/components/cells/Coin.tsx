@@ -1,6 +1,8 @@
 import React from 'react';
 import { styled, Typography } from '@mui/material';
 
+// There are no issues for you to fix in this file
+// Please ignore this file
 const toCoinTicker = (s: string): string =>
   s.replace(/^t/, '').replace(/USD$/, '');
 
