@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import {
   createColumnHelper,
   flexRender,
@@ -70,9 +70,13 @@ const columns = [
 ];
 
 const CurrencyTable: React.FC = () => {
-  const [{ result, status }] = useAsync<CurrencyDetail[]>(async () =>
+  const [{ result, status }, { execute }] = useAsync<CurrencyDetail[]>(() =>
     getTickers(['BTC', 'ETH', 'XRP', 'LTC']),
   );
+
+  useEffect(() => {
+    execute();
+  }, []);
 
   const reloadTable = useCallback(() => {
     alert('I do nothing');
