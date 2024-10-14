@@ -26,24 +26,23 @@ const CatgirlExplainer: React.FC = () => {
               Lanborghini Aventador &ndash; and your way to get a full-time job
             </Typography>
             <ul>
-              <li>
-                <Typography>Fix incorrect data shown in the table</Typography>
-              </li>
-              <li>
-                <Typography>
-                  Fix the percentage column (i.e. show 1% instead of 0.01).
-                  Also, make it either green (value &gt; 0) or red (value &lt;
-                  0)
-                </Typography>
-              </li>
-              <li>
-                <Typography>
-                  Fix the reload button &ndash; it should reload the table
-                </Typography>
-              </li>
-              <li>
-                <Typography>Add the ability to sort by columns</Typography>
-              </li>
+              <Typography component={'li'}>
+                If Bitfinex does not load, configure the proxy to take data from
+                public/data.json
+              </Typography>
+              <Typography component={'li'}>
+                Fix incorrect data shown in the table
+              </Typography>
+              <Typography component={'li'}>
+                Fix the percentage column (i.e. show 1% instead of 0.01). Also,
+                make it either green (value &gt; 0) or red (value &lt; 0)
+              </Typography>
+              <Typography component={'li'}>
+                Fix the reload button &ndash; it should reload the table
+              </Typography>
+              <Typography component={'li'}>
+                Add the ability to sort by columns
+              </Typography>
             </ul>
             <Typography variant='body2' color='text.secondary'>
               Good luck!
